@@ -27,5 +27,5 @@ if __name__ == "__main__":
                 # "init" : "random"
         }
 
-        Animator(X=X, algorithm=KMeans,params=params, save = True, name="example2.gif").plot()
+        Animator(X=X, algorithm=KMeans,params=params, save = True, name="example.gif").plot()
 
