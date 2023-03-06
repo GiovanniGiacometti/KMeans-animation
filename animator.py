@@ -1,6 +1,6 @@
 from matplotlib.animation import FuncAnimation, PillowWriter
 import matplotlib.pyplot as plt
-
+import os
 
 class Animator():
     
@@ -52,7 +52,10 @@ class Animator():
         
 
         if self.save:
-            anim.save(f"results/{self.name}", writer=PillowWriter(fps=self.fps) )
+            dir_name = "results"
+            if not os.path.isdir(dir_name):
+                os.makedirs(dir_name)
+            anim.save(f"{dir_name}/{self.name}", writer=PillowWriter(fps=self.fps) )
         else:
             plt.show()
 
