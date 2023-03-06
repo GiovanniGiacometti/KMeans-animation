@@ -1,6 +1,7 @@
 from matplotlib.animation import FuncAnimation, PillowWriter
 import matplotlib.pyplot as plt
 import os
+import numpy as np
 
 class Animator():
     
@@ -15,11 +16,10 @@ class Animator():
         self.save = save
 
         self.dataset = X
-        fm = self.algorithm(**self.params).fit(self.dataset)
-        self.clustering = fm.labels_
-        self.cluster_centers_ = fm.cluster_centers_
 
-        self.scatter_points    = self.ax.scatter(self.dataset[:,0], self.dataset[:,1])
+        self.cluster_centers_ = self.params["init"]
+
+        self.scatter_points = self.ax.scatter(self.dataset[:,0], self.dataset[:,1])
         self.scatter_cluster_centers_ = self.ax.scatter(self.cluster_centers_[:,0], self.cluster_centers_[:,1])
         self.name = name
         
@@ -31,12 +31,13 @@ class Animator():
 
 
     def update(self,frame):
-
         self.scatter_points.set_offsets(self.dataset)
-        self.scatter_points.set_array(self.clustering)
+
+        if frame != 0: #set colors only after second iteration so that no clusters are shown at the beginning
+            self.scatter_points.set_array(self.clustering)
+        
         self.scatter_cluster_centers_.set_offsets(self.cluster_centers_)
         self.scatter_cluster_centers_.set_color([(1.0,0.0,0.0) for _ in range(self.cluster_centers_.shape[0])])
-
 
         self.params["init"] = self.cluster_centers_
         fitted_model = self.algorithm(**self.params).fit(self.dataset)
