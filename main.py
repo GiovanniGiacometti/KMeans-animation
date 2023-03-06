@@ -8,23 +8,24 @@ from sklearn import datasets
 np.random.seed()
 
 if __name__ == "__main__":
-        X, _ = make_blobs(centers=8, n_samples=1500,random_state = 1)
+        X, _ = make_blobs(centers=19, n_samples=1500,random_state = 1)
 
         # iris = datasets.load_iris()
         # X = iris.data[:, :2]  # we only take the first two features.
 
         #specify centroid starting position, uncomment line below
-        n1 = 0
-        n2 = 2
+
+        centroid_indexes = np.array([0,3,5,9])
+
 
         params = {
-                "n_clusters" : 16,
+                "n_clusters" : 4,
                 "max_iter" : 1,
                 "n_init"     : 1,
                 "max_iter"   : 1,
-                # "init" : np.array([X[n1,:], X[n2,:]]) #or "random" / "kmeans++"
-                "init" : "random"
+                "init" : X[centroid_indexes,:]
+                # "init" : "random"
         }
 
-        Animator(X=X, algorithm=KMeans,params=params, save = True, name="example.gif").plot()
+        Animator(X=X, algorithm=KMeans,params=params, save = True, name="example2.gif").plot()
 

@@ -4,11 +4,13 @@ import matplotlib.pyplot as plt
 
 class Animator():
     
-    def __init__(self, X, algorithm,params,save,name):
+    def __init__(self, X, algorithm,params,save,name,fps=1,frames=10):
         
         self.fig, self.ax = plt.subplots()
         self.algorithm = algorithm
         self.params = params
+        self.fps = fps
+        self.frames = frames
 
         self.save = save
 
@@ -46,11 +48,11 @@ class Animator():
 
     
     def plot(self):
-        anim = FuncAnimation(self.fig, self.update, frames = 200,interval = 10000, repeat = False ,blit=True, init_func=self.init)
+        anim = FuncAnimation(self.fig, self.update, frames = self.frames ,interval = 1000, repeat = False ,blit=True, init_func=self.init)
         
 
         if self.save:
-            anim.save(f"results/{self.name}", PillowWriter())
+            anim.save(f"results/{self.name}", writer=PillowWriter(fps=self.fps) )
         else:
             plt.show()
 
