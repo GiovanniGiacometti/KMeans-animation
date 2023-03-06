@@ -19,13 +19,13 @@ if __name__ == "__main__":
 
 
         params = {
-                "n_clusters" : 2,
+                "n_clusters" : 10,
                 "max_iter" : 1,
                 "n_init"     : 1,
                 "max_iter"   : 1,
-                "init" : X[centroid_indexes,:]
-                # "init" : "random"
+                # "init" : X[centroid_indexes,:]
+                "init" : "random"
         }
 
-        Animator(X=X, algorithm=KMeans,params=params, save = True, name="example.gif",fps=10).plot()
+        Animator(X=X, algorithm=KMeans,params=params, save = True, name="example.gif").plot()
 

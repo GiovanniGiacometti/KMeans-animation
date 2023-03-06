@@ -17,7 +17,11 @@ class Animator():
 
         self.dataset = X
 
-        self.cluster_centers_ = self.params["init"]
+        if type(self.params["init"])==np.ndarray:
+            self.cluster_centers_ = self.params["init"]
+        else:
+            fittedmodel = self.algorithm(**self.params).fit(self.dataset)
+            self.cluster_centers_ = fittedmodel.cluster_centers_
 
         self.scatter_points = self.ax.scatter(self.dataset[:,0], self.dataset[:,1])
         self.scatter_cluster_centers_ = self.ax.scatter(self.cluster_centers_[:,0], self.cluster_centers_[:,1])
