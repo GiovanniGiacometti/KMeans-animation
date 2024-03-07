@@ -1,31 +1,30 @@
 import numpy as np
 from sklearn.datasets import make_blobs
-from sklearn.cluster import KMeans
-from animator import Animator
-from sklearn import datasets
+from animator import KMeansAnimator, KMeansInitMethod
 
-
-np.random.seed()
 
 if __name__ == "__main__":
-        X, _ = make_blobs(centers=3, n_samples=1500,random_state = 1)
 
-        # iris = datasets.load_iris()
-        # X = iris.data[:, :2]  # we only take the first two features.
+        SEED = 0
+        
+        np.random.seed(SEED)
 
-        #specify centroid starting position, uncomment line below
+        X, _ = make_blobs(centers=5, n_samples=1500, random_state = SEED)
 
-        centroid_indexes = np.array([0,3,])
-
+        cluster_centers = np.random.randint(X.min(), X.max(), size=(3,2))
+        # cluster_centers = None
 
         params = {
-                "n_clusters" : 10,
+                "n_clusters" : 3,
                 "max_iter" : 1,
-                "n_init"     : 1,
-                "max_iter"   : 1,
-                # "init" : X[centroid_indexes,:]
-                "init" : "random"
+                "n_init" : 1,
+                "max_iter" : 1
         }
 
-        Animator(X=X, algorithm=KMeans,params=params, save = True, name="example.gif").plot()
+        anim = KMeansAnimator(X=X, 
+                              k_means_init_method=KMeansInitMethod.CENTROIDS, 
+                              k_means_params=params,
+                              cluster_centers=cluster_centers)
+        
+        anim.plot(dir_name="results", file_name="kmeans_random.gif", frames=10, fps=1)
 
